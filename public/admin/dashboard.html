@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Jivak Dental Clinic</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦷</text></svg>" />
+</head>
+<body class="admin-body">
+
+  <!-- ═══ ADMIN LAYOUT ══════════════════════════════════════════════ -->
+  <div class="admin-layout">
+
+    <!-- ── Sidebar ──────────────────────────────────────────────── -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-logo">
+        <div class="logo-circle">🦷</div>
+        <div class="sl-text">
+          <strong>Jivak Dental</strong>
+          <span>Admin Portal</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <span class="nav-section-title">Main</span>
+        <a href="#" class="active" data-panel="overview" onclick="showPanel('overview', this)">
+          <span class="nav-icon">📊</span> Overview
+        </a>
+
+        <span class="nav-section-title">Appointments</span>
+        <a href="#" data-panel="appointments" onclick="showPanel('appointments', this)">
+          <span class="nav-icon">📅</span> All Appointments
+        </a>
+
+        <span class="nav-section-title">Patients</span>
+        <a href="#" data-panel="patients" onclick="showPanel('patients', this)">
+          <span class="nav-icon">👥</span> Patient Records
+        </a>
+
+        <span class="nav-section-title">Exports</span>
+        <a href="#" onclick="exportData('appointments')">
+          <span class="nav-icon">📥</span> Export Appointments
+        </a>
+        <a href="#" onclick="exportData('patients')">
+          <span class="nav-icon">📥</span> Export Patients
+        </a>
+
+        <span class="nav-section-title">Site</span>
+        <a href="/" target="_blank">
+          <span class="nav-icon">🌐</span> View Website
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button onclick="adminLogout()">🚪 Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ──────────────────────────────────────────── -->
+    <div class="admin-main">
+
+      <!-- Topbar -->
+      <div class="admin-topbar">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <button id="sidebarToggle" style="background:none; border:none; cursor:pointer; font-size:1.25rem; display:none;" aria-label="Toggle sidebar">☰</button>
+          <h1 id="pageTitle">Dashboard Overview</h1>
+        </div>
+        <div class="topbar-user">
+          <span>Admin</span>
+          <div class="avatar">A</div>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="admin-content">
+
+        <!-- ── Overview Panel ──────────────────────────────────── -->
+        <div class="dashboard-panel active" id="panel-overview">
+          <div class="stats-row" id="statsRow">
+            <div class="stat-widget">
+              <div class="sw-icon teal">📅</div>
+              <div class="sw-text">
+                <strong id="stat-total">—</strong>
+                <span>Total Appointments</span>
+              </div>
+            </div>
+            <div class="stat-widget">
+              <div class="sw-icon yellow">⏳</div>
+              <div class="sw-text">
+                <strong id="stat-pending">—</strong>
+                <span>Pending</span>
+              </div>
+            </div>
+            <div class="stat-widget">
+              <div class="sw-icon green">✅</div>
+              <div class="sw-text">
+                <strong id="stat-completed">—</strong>
+                <span>Completed</span>
+              </div>
+            </div>
+            <div class="stat-widget">
+              <div class="sw-icon teal">👥</div>
+              <div class="sw-text">
+                <strong id="stat-patients">—</strong>
+                <span>Total Patients</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Appointments -->
+          <div class="table-card">
+            <div class="table-header">
+              <h3>Recent Appointments</h3>
+              <div class="table-actions">
+                <button class="btn btn-sm btn-navy" onclick="showPanel('appointments', null)">View All</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table id="recentTable">
+                <thead>
+                  <tr>
+                    <th>#ID</th>
+                    <th>Patient</th>
+                    <th>Phone</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recentTableBody">
+                  <tr class="loading-row"><td colspan="7"><div class="spinner"></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Appointments Panel ──────────────────────────────── -->
+        <div class="dashboard-panel" id="panel-appointments">
+          <div class="table-card">
+            <div class="table-header">
+              <h3>All Appointments</h3>
+              <div class="table-actions">
+                <input type="text" id="apptSearch" placeholder="Search patient, phone..." oninput="filterAppointments()" />
+                <select id="apptStatusFilter" onchange="filterAppointments()" style="padding:0.5rem 0.75rem; border:1.5px solid var(--gray-mid); border-radius:6px; font-size:0.85rem; outline:none; background:white;">
+                  <option value="">All Statuses</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+                <button class="btn-export" onclick="exportData('appointments')">📥 Export Excel</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#ID</th>
+                    <th>Patient Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Notes</th>
+                    <th>Status</th>
+                    <th>Booked On</th>
+                  </tr>
+                </thead>
+                <tbody id="appointmentsTableBody">
+                  <tr class="loading-row"><td colspan="10"><div class="spinner"></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Patients Panel ──────────────────────────────────── -->
+        <div class="dashboard-panel" id="panel-patients">
+          <div class="table-card">
+            <div class="table-header">
+              <h3>Patient Records</h3>
+              <div class="table-actions">
+                <input type="text" id="patientSearch" placeholder="Search name, phone..." oninput="filterPatients()" />
+                <button class="btn-export" onclick="exportData('patients')">📥 Export Excel</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Patient Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Total Visits</th>
+                    <th>Services Used</th>
+                    <th>First Visit</th>
+                    <th>Last Visit</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="patientsTableBody">
+                  <tr class="loading-row"><td colspan="8"><div class="spinner"></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PATIENT HISTORY MODAL ════════════════════════════════════ -->
+  <div class="modal-overlay" id="historyModal" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+    <div class="modal" style="max-width:680px; text-align:left;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h3 id="historyTitle" style="margin:0;">Patient History</h3>
+        <button onclick="closeHistoryModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--gray-text);">✕</button>
+      </div>
+      <div id="historyContent" style="overflow-x:auto;">
+        <div class="spinner"></div>
+      </div>
+      <div style="margin-top:1.5rem; text-align:right;">
+        <button onclick="closeHistoryModal()" class="btn btn-navy" style="font-size:0.88rem; padding:0.6rem 1.5rem;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TOAST CONTAINER ══════════════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

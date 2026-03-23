@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | Jivak Dental Clinic</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦷</text></svg>" />
+</head>
+<body class="admin-body">
+
+  <div class="admin-login-page">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo-circle">🦷</div>
+        <h2>Admin Portal</h2>
+        <p>Jivak Dental Clinic — Staff Access</p>
+      </div>
+
+      <div class="login-error" id="loginError"></div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+            autocomplete="username"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          <span id="loginText">🔐 Sign In</span>
+          <span id="loginSpinner" style="display:none;">⏳ Signing in...</span>
+        </button>
+      </form>
+
+      <p style="text-align:center; margin-top:1.5rem; font-size:0.82rem; color:var(--gray-text);">
+        <a href="/" style="color:var(--teal); font-weight:600;">← Back to Website</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // If already logged in, redirect to dashboard
+    if (localStorage.getItem('adminToken') === 'jivak2024-token') {
+      window.location.href = '/admin/dashboard';
+    }
+
+    const form = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginText = document.getElementById('loginText');
+    const loginSpinner = document.getElementById('loginSpinner');
+    const loginError = document.getElementById('loginError');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginError.style.display = 'none';
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) {
+        loginError.textContent = 'Please enter both username and password.';
+        loginError.style.display = 'block';
+        return;
+      }
+
+      loginText.style.display = 'none';
+      loginSpinner.style.display = 'inline';
+      loginBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await res.json();
+
+        if (data.success && data.token) {
+          localStorage.setItem('adminToken', data.token);
+          window.location.href = '/admin/dashboard';
+        } else {
+          loginError.textContent = data.error || 'Invalid credentials. Please try again.';
+          loginError.style.display = 'block';
+        }
+      } catch (err) {
+        loginError.textContent = 'Unable to connect to server. Please try again.';
+        loginError.style.display = 'block';
+      } finally {
+        loginText.style.display = 'inline';
+        loginSpinner.style.display = 'none';
+        loginBtn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

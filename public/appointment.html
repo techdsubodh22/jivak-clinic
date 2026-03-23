@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Book an appointment at Jivak Dental Clinic — Dr. Sujata V Gaikwad, Ambernath, Thane." />
+  <title>Book Appointment | Jivak Dental Clinic</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦷</text></svg>" />
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══════════════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <div class="logo-icon">🦷</div>
+        <div class="brand-text">
+          <span class="brand-name">Jivak Dental Clinic</span>
+          <span class="brand-tagline">Your Smile, Our Priority</span>
+        </div>
+      </a>
+      <div class="navbar-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/services.html">Services</a>
+        <a href="/appointment.html" class="nav-cta active">Book Appointment</a>
+      </div>
+      <button class="navbar-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ PAGE HERO ══════════════════════════════════════════════════ -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Book an Appointment</h1>
+      <p>Fill in the form below and we'll confirm your appointment. We look forward to caring for your smile!</p>
+    </div>
+  </section>
+
+  <!-- ═══ APPOINTMENT FORM ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="appointment-layout">
+
+        <!-- Form -->
+        <div class="form-card">
+          <h2>Schedule Your Visit</h2>
+          <p>All fields marked with <span style="color:#e74c3c">*</span> are required. We will reach out to confirm your appointment.</p>
+
+          <form id="appointmentForm" novalidate>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="patient_name">Full Name <span class="req">*</span></label>
+                <input type="text" id="patient_name" name="patient_name" placeholder="e.g. Rahul Sharma" autocomplete="name" required />
+                <span class="error-msg" id="err_name">Please enter your full name.</span>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="e.g. 9876543210" autocomplete="tel" required />
+                <span class="error-msg" id="err_phone">Enter a valid 10-digit mobile number.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="e.g. rahul@example.com" autocomplete="email" />
+              <span class="error-msg" id="err_email">Enter a valid email address.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="service">Service Required <span class="req">*</span></label>
+              <select id="service" name="service" required>
+                <option value="" disabled selected>-- Select a Service --</option>
+                <option value="General Dentistry">General Dentistry</option>
+                <option value="Dental Surgery">Dental Surgery</option>
+                <option value="Root Canal Treatment">Root Canal Treatment</option>
+                <option value="Tooth Restoration">Tooth Restoration</option>
+                <option value="Cosmetic Filling">Cosmetic Filling</option>
+                <option value="Other / Consultation">Other / Consultation</option>
+              </select>
+              <span class="error-msg" id="err_service">Please select a service.</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="preferred_date">Preferred Date <span class="req">*</span></label>
+                <input type="date" id="preferred_date" name="preferred_date" required />
+                <span class="error-msg" id="err_date">Please select a preferred date.</span>
+              </div>
+              <div class="form-group">
+                <label for="preferred_time">Preferred Time <span class="req">*</span></label>
+                <select id="preferred_time" name="preferred_time" required>
+                  <option value="" disabled selected>-- Select a Time --</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="10:30 AM">10:30 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="11:30 AM">11:30 AM</option>
+                  <option value="12:00 PM">12:00 PM</option>
+                  <option value="12:30 PM">12:30 PM</option>
+                  <option value="01:00 PM">01:00 PM</option>
+                  <option value="01:30 PM">01:30 PM</option>
+                  <option value="02:00 PM">02:00 PM</option>
+                  <option value="02:30 PM">02:30 PM</option>
+                  <option value="03:00 PM">03:00 PM</option>
+                  <option value="03:30 PM">03:30 PM</option>
+                  <option value="04:00 PM">04:00 PM</option>
+                  <option value="04:30 PM">04:30 PM</option>
+                  <option value="05:00 PM">05:00 PM</option>
+                  <option value="05:30 PM">05:30 PM</option>
+                  <option value="06:00 PM">06:00 PM</option>
+                  <option value="06:30 PM">06:30 PM</option>
+                </select>
+                <span class="error-msg" id="err_time">Please select a preferred time.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="notes">Additional Notes</label>
+              <textarea id="notes" name="notes" rows="3" placeholder="Describe your concern, symptoms, or any other information you'd like us to know..."></textarea>
+            </div>
+
+            <div class="form-submit">
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                <span id="submitText">📅 Confirm Appointment</span>
+                <span id="submitSpinner" style="display:none;">⏳ Booking...</span>
+              </button>
+            </div>
+
+            <div id="formError" style="display:none; margin-top:1rem; background:#fdf2f2; border:1px solid #f5c6cb; color:#c0392b; padding:0.75rem 1rem; border-radius:8px; font-size:0.88rem;"></div>
+
+          </form>
+        </div>
+
+        <!-- Sidebar Info -->
+        <div>
+          <div class="appt-info-box">
+            <h3>📋 Clinic Information</h3>
+            <ul class="info-list">
+              <li>
+                <span class="il-icon">📍</span>
+                <div class="il-text">
+                  <strong>Location</strong>
+                  <span>Ambernath, Thane, Maharashtra — 421501</span>
+                </div>
+              </li>
+              <li>
+                <span class="il-icon">👩‍⚕️</span>
+                <div class="il-text">
+                  <strong>Doctor</strong>
+                  <span>Dr. Sujata V Gaikwad, BDS</span>
+                </div>
+              </li>
+              <li>
+                <span class="il-icon">🕐</span>
+                <div class="il-text">
+                  <strong>Hours</strong>
+                  <span>Mon–Sat: 10:00 AM – 7:00 PM</span>
+                </div>
+              </li>
+              <li>
+                <span class="il-icon">📅</span>
+                <div class="il-text">
+                  <strong>Days</strong>
+                  <span>Monday to Saturday</span>
+                </div>
+              </li>
+              <li>
+                <span class="il-icon">⭐</span>
+                <div class="il-text">
+                  <strong>Rating</strong>
+                  <span>4.0 / 5 — Highly Rated Clinic</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="appt-info-box" style="margin-top:1.5rem;">
+            <h3>ℹ️ What to Expect</h3>
+            <ul class="info-list">
+              <li>
+                <span class="il-icon">1️⃣</span>
+                <div class="il-text">
+                  <strong>Submit Form</strong>
+                  <span>Fill in your details and preferred time slot.</span>
+                </div>
+              </li>
+              <li>
+                <span class="il-icon">2️⃣</span>
+                <div class="il-text">
+                  <strong>Receive Confirmation</strong>
+                  <span>You'll get an appointment ID instantly.</span>
+                </div>
+              </li>
+              <li>
+                <span class="il-icon">3️⃣</span>
+                <div class="il-text">
+                  <strong>Visit Us</strong>
+                  <span>Arrive 10 minutes before your slot.</span>
+                </div>
+              </li>
+              <li>
+                <span class="il-icon">4️⃣</span>
+                <div class="il-text">
+                  <strong>Get Treated</strong>
+                  <span>Our expert team will take great care of you!</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="appt-info-box" style="margin-top:1.5rem; background: linear-gradient(135deg, var(--teal-light) 0%, #e0f4f7 100%); border-color: var(--teal);">
+            <h3 style="border-bottom-color:rgba(42,183,202,0.3);">🦷 Our Services</h3>
+            <ul class="info-list" style="margin-top:0.25rem;">
+              <li><span class="il-icon">🦷</span><div class="il-text"><span>General Dentistry</span></div></li>
+              <li><span class="il-icon">🔬</span><div class="il-text"><span>Dental Surgery</span></div></li>
+              <li><span class="il-icon">💉</span><div class="il-text"><span>Root Canal Treatment</span></div></li>
+              <li><span class="il-icon">🪥</span><div class="il-text"><span>Tooth Restoration</span></div></li>
+              <li><span class="il-icon">✨</span><div class="il-text"><span>Cosmetic Filling</span></div></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SUCCESS MODAL ══════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="successModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="success-icon">✅</div>
+      <h3 id="modalTitle">Appointment Booked!</h3>
+      <p>Thank you! Your appointment request has been received. We will confirm it shortly.</p>
+
+      <div class="appointment-id">
+        <span style="font-size:0.8rem; color:var(--gray-text);">Your Appointment ID</span>
+        <strong id="appointmentIdDisplay">#---</strong>
+      </div>
+
+      <p id="modalSummary" style="font-size:0.85rem; color:var(--gray-text); background:var(--gray); padding:0.75rem 1rem; border-radius:8px; text-align:left; margin-bottom:1.5rem;"></p>
+
+      <div style="display:flex; gap:0.75rem; justify-content:center;">
+        <a href="/" class="btn btn-navy" style="font-size:0.88rem; padding:0.6rem 1.5rem;">Back to Home</a>
+        <button onclick="closeModal()" class="btn btn-outline" style="color:var(--navy); border-color:var(--navy); font-size:0.88rem; padding:0.6rem 1.5rem;">Book Another</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-name">🦷 Jivak Dental Clinic</div>
+          <p>Providing quality dental care to families in Ambernath and surrounding areas.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">📘</a>
+            <a href="#" aria-label="Instagram">📸</a>
+            <a href="#" aria-label="Google">🔍</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/">🏠 Home</a></li>
+            <li><a href="/services.html">🦷 Services</a></li>
+            <li><a href="/appointment.html">📅 Book Appointment</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/services.html#general">General Dentistry</a></li>
+            <li><a href="/services.html#surgery">Dental Surgery</a></li>
+            <li><a href="/services.html#rct">Root Canal Treatment</a></li>
+            <li><a href="/services.html#restoration">Tooth Restoration</a></li>
+            <li><a href="/services.html#cosmetic">Cosmetic Filling</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul class="footer-contact">
+            <li><span class="fc-icon">📍</span><span>Ambernath, Thane, Maharashtra — 421501</span></li>
+            <li><span class="fc-icon">🕐</span><span>Mon–Sat: 10:00 AM – 7:00 PM</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Jivak Dental Clinic. All rights reserved.</p>
+        <p>Designed with ❤️ for your dental health</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/appointment.js"></script>
+</body>
+</html>

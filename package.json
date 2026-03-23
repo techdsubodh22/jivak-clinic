@@ -1,0 +1,18 @@
+{
+  "name": "jivak-dental-clinic",
+  "version": "1.0.0",
+  "description": "Jivak Dental Clinic website with appointment booking and admin portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sql.js": "^1.10.2",
+    "xlsx": "^0.18.5"
+  },
+  "keywords": ["dental", "clinic", "appointment"],
+  "author": "Dr. Sujata V Gaikwad",
+  "license": "MIT"
+}
