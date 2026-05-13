@@ -48,7 +48,7 @@ jobs:
             --from-literal=ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }} \
             --from-literal=ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
             --from-literal=ADMIN_TOKEN=${{ secrets.ADMIN_TOKEN }} \
-            --dry-run=client -o yaml | kubectl apply -f -
+            --dry-run=client -o yaml | kubectl apply --validate=false -f -
 
       - name: Deploy to Kubernetes
         run: |
