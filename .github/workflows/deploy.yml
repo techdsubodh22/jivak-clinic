@@ -25,7 +25,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GH_PACKAGES_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -60,7 +60,7 @@ jobs:
             --namespace=test-subodh \
             --docker-server=ghcr.io \
             --docker-username=${{ github.actor }} \
-            --docker-password=${{ secrets.GITHUB_TOKEN }} \
+            --docker-password=${{ secrets.GH_PACKAGES_TOKEN }} \
             --dry-run=client -o yaml | kubectl apply --validate=false -f -
           kubectl create secret generic test-subodh-secrets \
             --namespace=test-subodh \
