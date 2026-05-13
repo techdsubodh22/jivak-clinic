@@ -366,10 +366,12 @@ p { color: var(--gray-text); line-height: 1.75; }
 }
 
 .hc-avatar {
-  width: 64px;
-  height: 64px;
+  width: 90px;
+  height: 90px;
   background: linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%);
   border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -522,10 +524,12 @@ p { color: var(--gray-text); line-height: 1.75; }
 }
 
 .doctor-avatar {
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
   background: linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%);
   border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
