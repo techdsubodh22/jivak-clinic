@@ -41,18 +41,15 @@ jobs:
         run: |
           sed -i "s|IMAGE_TAG|${{ github.sha }}|g" k8s/deployment.yaml
 
-      - name: Create or update app secret
+      - name: Deploy to Kubernetes
         run: |
+          kubectl apply -f k8s/namespace.yaml
           kubectl create secret generic test-subodh-secrets \
             --namespace=test-subodh \
             --from-literal=ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }} \
             --from-literal=ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
             --from-literal=ADMIN_TOKEN=${{ secrets.ADMIN_TOKEN }} \
             --dry-run=client -o yaml | kubectl apply --validate=false -f -
-
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/pvc.yaml
           kubectl apply -f k8s/service.yaml
           kubectl apply -f k8s/deployment.yaml
