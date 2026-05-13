@@ -58,7 +58,7 @@
 
   <script>
     // If already logged in, redirect to dashboard
-    if (localStorage.getItem('adminToken') === 'jivak2024-token') {
+    if (localStorage.getItem('adminToken')) {
       window.location.href = '/admin/dashboard';
     }
 

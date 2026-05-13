@@ -5,11 +5,10 @@
 'use strict';
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
-const ADMIN_TOKEN = 'jivak2024-token';
+const ADMIN_TOKEN = localStorage.getItem('adminToken');
 
 (function checkAuth() {
-  const token = localStorage.getItem('adminToken');
-  if (token !== ADMIN_TOKEN) {
+  if (!ADMIN_TOKEN) {
     window.location.href = '/admin';
   }
 })();
