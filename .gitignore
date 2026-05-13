@@ -2,3 +2,4 @@ node_modules/
 clinic.db
 .idea/
 .claude/
+k8s/secret.yaml

@@ -9,7 +9,7 @@
 const path = require('path');
 const fs   = require('fs');
 
-const DB_PATH = path.join(__dirname, 'clinic.db');
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'clinic.db');
 
 let db       = null;   // sql.js Database instance
 let SQL      = null;   // sql.js module

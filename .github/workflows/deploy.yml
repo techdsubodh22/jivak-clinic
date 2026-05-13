@@ -1,0 +1,60 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/test-subodh
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    permissions:
+      contents: read
+      packages: write   # needed to push to GHCR
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}   # automatic, no setup needed
+
+      - name: Build & push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+
+      - name: Apply k8s manifests
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/pvc.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/deployment.yaml
+
+      - name: Create or update app secret
+        run: |
+          kubectl create secret generic test-subodh-secrets \
+            --namespace=test-subodh \
+            --from-literal=ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }} \
+            --from-literal=ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
+            --from-literal=ADMIN_TOKEN=${{ secrets.ADMIN_TOKEN }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Update image & rollout
+        run: |
+          kubectl set image deployment/test-subodh \
+            test-subodh=${{ env.IMAGE }}:${{ github.sha }} \
+            -n test-subodh
+          kubectl rollout status deployment/test-subodh -n test-subodh

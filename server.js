@@ -6,9 +6,9 @@ const db = require('./database');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'jivak2024';
-const ADMIN_TOKEN    = 'jivak2024-token';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'changeme';
+const ADMIN_TOKEN    = process.env.ADMIN_TOKEN    || 'changeme-token';
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(express.json());

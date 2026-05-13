@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-subodh
+  namespace: test-subodh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-subodh
+  template:
+    metadata:
+      labels:
+        app: test-subodh
+    spec:
+      containers:
+        - name: test-subodh
+          image: ghcr.io/YOUR_GITHUB_USERNAME/test-subodh:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: DB_PATH
+              value: /data/clinic.db
+            - name: ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: test-subodh-secrets
+                  key: ADMIN_USERNAME
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: test-subodh-secrets
+                  key: ADMIN_PASSWORD
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: test-subodh-secrets
+                  key: ADMIN_TOKEN
+          volumeMounts:
+            - name: db-storage
+              mountPath: /data
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: test-subodh-db-pvc
