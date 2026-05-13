@@ -13,6 +13,8 @@ spec:
       labels:
         app: test-subodh
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - name: test-subodh
           image: ghcr.io/techdsubodh22/test-subodh:IMAGE_TAG
