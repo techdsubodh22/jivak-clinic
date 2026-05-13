@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: test-subodh
-          image: ghcr.io/YOUR_GITHUB_USERNAME/test-subodh:latest
+          image: ghcr.io/techdsubodh22/test-subodh:IMAGE_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
